@@ -77,7 +77,11 @@ fun AppNavigation(viewModel: ChatViewModel) {
                 MessageOptionScreen(
                     message = message,
                     onDelete = {
-                        viewModel.deleteMessage(messageId)
+                        viewModel.deleteMessage(message.id)
+                        navController.popBackStack()
+                    },
+                    onEdit = { newText ->
+                        viewModel.editMessage(message.id, newText)
                         navController.popBackStack()
                     },
                     onBack = { navController.popBackStack() }

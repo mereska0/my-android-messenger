@@ -38,6 +38,14 @@ class ChatViewModel: ViewModel() {
     fun updateSearch(query: String){
         searchQuery = query
     }
+
+    fun editMessage(id: Int, newText: String) {
+        val index = chats.indexOfFirst { it.id == id }
+        if (index != -1) {
+            chats[index] = chats[index].copy(text = newText)
+        }
+    }
+
     val filteredContacts: List<Chat>
         get() = getContacts().filter {
             it.name.contains(searchQuery, ignoreCase = true)
