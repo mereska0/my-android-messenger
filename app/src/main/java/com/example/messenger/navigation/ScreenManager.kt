@@ -1,4 +1,4 @@
-package com.example.messenger
+package com.example.messenger.navigation
 
 sealed class ScreenManager(val route: String) {
     object ChatScreen: ScreenManager("ChatScreen")

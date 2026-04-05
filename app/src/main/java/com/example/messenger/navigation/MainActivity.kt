@@ -1,16 +1,21 @@
-package com.example.messenger
+package com.example.messenger.navigation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.messenger.ui.ChatScreen
+import com.example.messenger.ui.ContactsScreen
+import com.example.messenger.ui.MessageOptionScreen
+import com.example.messenger.viewmodel.ChatViewModel
 
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<ChatViewModel>()
@@ -53,7 +58,13 @@ fun AppNavigation(viewModel: ChatViewModel) {
             val messages = viewModel.chats.filter { it.chatId == id }
             ChatScreen(
                 messages = messages,
-                onSend = { chatId, text, isFromMe -> viewModel.sendMessage(chatId, text, isFromMe) },
+                onSend = { chatId, text, isFromMe ->
+                    viewModel.sendMessage(
+                        chatId,
+                        text,
+                        isFromMe
+                    )
+                },
                 onBack = { navController.popBackStack() },
                 onMessageClick = { message ->
                     navController.navigate(
@@ -87,7 +98,7 @@ fun AppNavigation(viewModel: ChatViewModel) {
                     onBack = { navController.popBackStack() }
                 )
             } else {
-                androidx.compose.material3.Text("Message not found")
+                Text("Message not found")
             }
         }
     }
