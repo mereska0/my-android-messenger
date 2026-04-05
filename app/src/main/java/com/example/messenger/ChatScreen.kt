@@ -1,6 +1,7 @@
 package com.example.messenger
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,10 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChatScreen(chatId: Int, viewModel: ChatViewModel, onBack: () -> Unit) {
-    val messages = viewModel.chats.filter { it.chatId == chatId }
+fun ChatScreen(messages: List<Message>,
+               onSend: (id: Int, text: String, isFromMe: Boolean) -> Unit,
+               onBack: () -> Unit,
+               onMessageClick: (Message) -> Unit) {
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
+    val chatId = messages.lastOrNull()?.chatId ?: 0
 
     LaunchedEffect(messages.size) {
         listState.animateScrollToItem(0)
@@ -65,7 +69,8 @@ fun ChatScreen(chatId: Int, viewModel: ChatViewModel, onBack: () -> Unit) {
         ) {
             items(messages) { message ->
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable{ onMessageClick(message)},
                     horizontalArrangement = if (message.isFromMe) Arrangement.End else Arrangement.Start
                 ) {
                     Text(
@@ -104,7 +109,7 @@ fun ChatScreen(chatId: Int, viewModel: ChatViewModel, onBack: () -> Unit) {
             Button(
                 onClick = {
                     if (inputText.isNotBlank()) {
-                        viewModel.sendMessage(chatId, inputText, true)
+                        onSend(chatId, inputText, true)
                         inputText = ""
                     }
                 }
@@ -114,7 +119,7 @@ fun ChatScreen(chatId: Int, viewModel: ChatViewModel, onBack: () -> Unit) {
             Button(
                 onClick = {
                     if (inputText.isNotBlank()) {
-                        viewModel.sendMessage(chatId, inputText, false)
+                        onSend(chatId, inputText, false)
                         inputText = ""
                     }
                 }

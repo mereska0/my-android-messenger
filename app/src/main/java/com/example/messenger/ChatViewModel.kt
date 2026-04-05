@@ -1,6 +1,9 @@
 package com.example.messenger
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 class ChatViewModel: ViewModel() {
@@ -27,6 +30,18 @@ class ChatViewModel: ViewModel() {
             Chat(chatId, "chat$chatId", lastMessage)
         }
     }
+    fun deleteMessage(id: Int) {
+        chats.removeAll { it.id == id }
+    }
+
+    var searchQuery by mutableStateOf("")
+    fun updateSearch(query: String){
+        searchQuery = query
+    }
+    val filteredContacts: List<Chat>
+        get() = getContacts().filter {
+            it.name.contains(searchQuery, ignoreCase = true)
+        }
 }
 data class Chat(
     val id: Int,

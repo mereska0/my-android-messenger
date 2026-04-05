@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavigation(viewModel: ChatViewModel){
+fun AppNavigation(viewModel: ChatViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -32,7 +32,9 @@ fun AppNavigation(viewModel: ChatViewModel){
     ) {
         composable(ScreenManager.ContactsScreen.route) {
             ContactsScreen(
-                contacts = viewModel.getContacts(),
+                contacts = viewModel.filteredContacts,
+                searchQuery = viewModel.searchQuery,
+                onSearchChange = { viewModel.updateSearch(it) },
                 onChatClick = { chat ->
                     navController.navigate(
                         ScreenManager.ChatScreen.withArgs(chat.id.toString())
@@ -40,14 +42,49 @@ fun AppNavigation(viewModel: ChatViewModel){
                 }
             )
         }
+
         composable(
-            route = "${ScreenManager.ChatScreen.route}/{id}",
+            route = "${ScreenManager.ChatScreen.route}/{chatId}",
+            arguments = listOf(
+                navArgument("chatId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("chatId") ?: 0
+            val messages = viewModel.chats.filter { it.chatId == id }
+            ChatScreen(
+                messages = messages,
+                onSend = { chatId, text, isFromMe -> viewModel.sendMessage(chatId, text, isFromMe) },
+                onBack = { navController.popBackStack() },
+                onMessageClick = { message ->
+                    navController.navigate(
+                        ScreenManager.MessageOptionScreen.withArgs(message.id.toString())
+                    )
+                }
+            )
+        }
+
+        composable(
+            route = "${ScreenManager.MessageOptionScreen.route}/{id}",
             arguments = listOf(
                 navArgument("id") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("id") ?: 0
-            ChatScreen(id, viewModel, onBack = {navController.popBackStack()})
+            val messageId = backStackEntry.arguments?.getInt("id") ?: 0
+
+            val message = viewModel.chats.find { it.id == messageId }
+
+            if (message != null) {
+                MessageOptionScreen(
+                    message = message,
+                    onDelete = {
+                        viewModel.deleteMessage(messageId)
+                        navController.popBackStack()
+                    },
+                    onBack = { navController.popBackStack() }
+                )
+            } else {
+                androidx.compose.material3.Text("Message not found")
+            }
         }
     }
 }
