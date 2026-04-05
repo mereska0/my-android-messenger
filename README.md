@@ -25,8 +25,9 @@ This project was created as part of an intensive Android learning process with f
 ## 📸 Screenshots
 
 > <img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/790111e7-33e2-4853-a45b-9ec1b1f60170" />
-> <img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/b607c004-407d-4c5f-93b3-d76b16f6d7eb" />
-> <img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/3fffbf24-b4e3-4499-836d-4d55c95f3e4c" />
+> <img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/a506222d-15a5-466a-a1d9-62cce4fd66f1" />
+> <img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/8c27a451-d990-470a-aa6d-7c5d194033c2" />
+
 
 ---
 
