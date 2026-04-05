@@ -90,7 +90,7 @@ fun ChatScreen(messages: List<Message>,
                 value = inputText,
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Type a message..") },
+                placeholder = { Text("Type a message...") },
                 shape = RoundedCornerShape(24.dp)
             )
 
