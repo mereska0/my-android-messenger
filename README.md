@@ -109,9 +109,9 @@ com.example.messenger
 ## 🔧 Future Improvements
 
 * ☁️ Backend integration (Firebase / REST API)
+* 🤖 AI integration
 * 💾 Local storage (Room)
 * 🔔 Push notifications
-* 🧪 Unit tests
 * 🧱 Dependency Injection (Hilt)
 
 ---
