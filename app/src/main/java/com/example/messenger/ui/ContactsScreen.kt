@@ -38,7 +38,6 @@ fun ContactsScreen(
             color = MaterialTheme.colorScheme.primary
         )
 
-        // Поле поиска
         OutlinedTextField(
             value = searchQuery,
             onValueChange = onSearchChange,
@@ -63,7 +62,6 @@ fun ContactsScreen(
             }
         )
 
-        // Список контактов
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -104,7 +102,6 @@ private fun ContactItem(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Аватар
             Surface(
                 modifier = Modifier.size(50.dp),
                 shape = CircleShape,
@@ -123,7 +120,6 @@ private fun ContactItem(
                 }
             }
 
-            // Информация о чате
             Column(
                 modifier = Modifier.weight(1f)
             ) {

@@ -82,7 +82,6 @@ fun ChatScreen(
                             Alignment.Start
                     ) {
 
-                        // 💬 Bubble
                         Text(
                             text = message.text,
                             modifier = Modifier
@@ -103,7 +102,6 @@ fun ChatScreen(
                             fontSize = 16.sp
                         )
 
-                        // ⏱ Timestamp
                         Text(
                             text = formatTime(message.timestamp),
                             fontSize = 10.sp,
@@ -115,7 +113,6 @@ fun ChatScreen(
             }
         }
 
-        // INPUT AREA
         Row(
             modifier = Modifier
                 .fillMaxWidth()
