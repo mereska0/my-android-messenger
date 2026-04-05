@@ -13,18 +13,25 @@ import androidx.compose.ui.unit.sp
 import com.example.messenger.viewmodel.Message
 
 @Composable
-fun ChatScreen(messages: List<Message>,
-               onSend: (id: Int, text: String, isFromMe: Boolean) -> Unit,
-               onBack: () -> Unit,
-               onMessageClick: (Message) -> Unit) {
+fun ChatScreen(
+    messages: List<Message>,
+    chatId: Int,
+    onSend: (id: Int, text: String, isFromMe: Boolean) -> Unit,
+    onBack: () -> Unit,
+    onMessageClick: (Message) -> Unit,
+    formatTime: (Long) -> String
+) {
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
-    val chatId = messages.lastOrNull()?.chatId ?: 0
 
     LaunchedEffect(messages.size) {
-        listState.animateScrollToItem(0)
+        if (messages.isNotEmpty()) {
+            listState.animateScrollToItem(messages.lastIndex)
+        }
     }
+
     Column(Modifier.fillMaxSize()) {
+
         Spacer(modifier = Modifier.height(20.dp))
 
         Row(
@@ -37,55 +44,85 @@ fun ChatScreen(messages: List<Message>,
             Button(onClick = onBack) {
                 Text("Back")
             }
+
             Text(
                 text = "Chat $chatId",
                 fontSize = 24.sp
             )
+
             Spacer(modifier = Modifier.width(60.dp))
         }
 
-        HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+        HorizontalDivider()
 
         LazyColumn(
             state = listState,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(messages) { message ->
+
                 Row(
-                    modifier = Modifier.fillMaxWidth()
-                        .clickable{ onMessageClick(message)},
-                    horizontalArrangement = if (message.isFromMe) Arrangement.End else Arrangement.Start
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onMessageClick(message) },
+                    horizontalArrangement = if (message.isFromMe)
+                        Arrangement.End
+                    else
+                        Arrangement.Start
                 ) {
-                    Text(
-                        text = message.text,
-                        modifier = Modifier
-                            .background(
-                                color = if (message.isFromMe) Color(0xFF1976D2) else Color(0xFFE0E0E0),
-                                shape = RoundedCornerShape(
-                                    topStart = 16.dp,
-                                    topEnd = 16.dp,
-                                    bottomStart = if (message.isFromMe) 16.dp else 4.dp,
-                                    bottomEnd = if (message.isFromMe) 4.dp else 16.dp
+
+                    Column(
+                        horizontalAlignment = if (message.isFromMe)
+                            Alignment.End
+                        else
+                            Alignment.Start
+                    ) {
+
+                        // 💬 Bubble
+                        Text(
+                            text = message.text,
+                            modifier = Modifier
+                                .background(
+                                    color = if (message.isFromMe)
+                                        Color(0xFF1976D2)
+                                    else
+                                        Color(0xFFE0E0E0),
+                                    shape = RoundedCornerShape(
+                                        topStart = 16.dp,
+                                        topEnd = 16.dp,
+                                        bottomStart = if (message.isFromMe) 16.dp else 4.dp,
+                                        bottomEnd = if (message.isFromMe) 4.dp else 16.dp
+                                    )
                                 )
-                            )
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        color = if (message.isFromMe) Color.White else Color.Black,
-                        fontSize = 16.sp
-                    )
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                            color = if (message.isFromMe) Color.White else Color.Black,
+                            fontSize = 16.sp
+                        )
+
+                        // ⏱ Timestamp
+                        Text(
+                            text = formatTime(message.timestamp),
+                            fontSize = 10.sp,
+                            color = Color.Gray,
+                            modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp)
+                        )
+                    }
                 }
             }
         }
+
+        // INPUT AREA
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
             TextField(
                 value = inputText,
                 onValueChange = { inputText = it },
@@ -104,6 +141,7 @@ fun ChatScreen(messages: List<Message>,
             ) {
                 Text("Send")
             }
+
             Button(
                 onClick = {
                     if (inputText.isNotBlank()) {
@@ -112,7 +150,7 @@ fun ChatScreen(messages: List<Message>,
                     }
                 }
             ) {
-                Text("Reply(Fake)")
+                Text("Reply")
             }
         }
     }

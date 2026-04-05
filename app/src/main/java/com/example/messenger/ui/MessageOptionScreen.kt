@@ -68,10 +68,11 @@ fun MessageOptionScreen(
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-
+            if (message.isFromMe) {
                 Button(onClick = { isEditing = true }) {
                     Text("Edit")
                 }
+            }
 
                 Button(
                     onClick = onDelete,

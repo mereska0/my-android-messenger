@@ -2,6 +2,9 @@ package com.example.messenger.viewmodel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ChatViewModel: ViewModel() {
     private val _chats = List(40){
@@ -15,10 +18,19 @@ class ChatViewModel: ViewModel() {
         addAll(_chats)
     }
     fun sendMessage(chatId: Int, text: String, isFromMe: Boolean){
-        val newId = (chats.lastOrNull()?.id ?: 0) + 1
+        val newId = (chats.maxOfOrNull { it.id } ?: 0) + 1
         chats.add(Message(newId, chatId, text, isFromMe))
+        updateContacts()
     }
-    fun getContacts(): List<Chat> {
+    var contacts by mutableStateOf<List<Chat>>(emptyList())
+        private set
+    private fun updateContacts() {
+        contacts = buildContacts()
+    }
+    init {
+        contacts = buildContacts()
+    }
+    private fun buildContacts(): List<Chat> {
         return (0..19).map { chatId ->
             val lastMessage = chats
                 .filter { it.chatId == chatId }
@@ -29,6 +41,7 @@ class ChatViewModel: ViewModel() {
     }
     fun deleteMessage(id: Int) {
         chats.removeAll { it.id == id }
+        updateContacts()
     }
 
     var searchQuery by mutableStateOf("")
@@ -40,11 +53,19 @@ class ChatViewModel: ViewModel() {
         val index = chats.indexOfFirst { it.id == id }
         if (index != -1) {
             chats[index] = chats[index].copy(text = newText)
+            updateContacts()
         }
     }
+    fun formatTime(time: Long): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return sdf.format(Date(time))
+    }
+
+
+
 
     val filteredContacts: List<Chat>
-        get() = getContacts().filter {
+        get() = contacts.filter {
             it.name.contains(searchQuery, ignoreCase = true)
         }
 }
@@ -57,5 +78,6 @@ data class Message(
     val id: Int,
     val chatId: Int,
     val text: String,
-    val isFromMe: Boolean
+    val isFromMe: Boolean,
+    val timestamp: Long = System.currentTimeMillis()
 )

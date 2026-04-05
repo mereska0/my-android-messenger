@@ -54,10 +54,11 @@ fun AppNavigation(viewModel: ChatViewModel) {
                 navArgument("chatId") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("chatId") ?: 0
-            val messages = viewModel.chats.filter { it.chatId == id }
+            val chatId = backStackEntry.arguments?.getInt("chatId") ?: 0
+            val messages = viewModel.chats.filter { it.chatId == chatId }
             ChatScreen(
                 messages = messages,
+                chatId = chatId,
                 onSend = { chatId, text, isFromMe ->
                     viewModel.sendMessage(
                         chatId,
@@ -70,7 +71,8 @@ fun AppNavigation(viewModel: ChatViewModel) {
                     navController.navigate(
                         ScreenManager.MessageOptionScreen.withArgs(message.id.toString())
                     )
-                }
+                },
+                formatTime = viewModel::formatTime
             )
         }
 
