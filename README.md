@@ -83,29 +83,6 @@ uiState = uiState.copy(
 
 ---
 
-## 📦 Project Structure
-
-```
-com.example.messenger
-│
-├── ui/
-│   ├── ContactsScreen.kt
-│   ├── ChatScreen.kt
-│   ├── MessageOptionScreen.kt
-│
-├── viewmodel/
-│   └── ChatViewModel.kt
-│
-├── model/
-│   ├── Chat.kt
-│   └── Message.kt
-│
-└── navigation/
-    └── ScreenManager.kt
-```
-
----
-
 ## 🔧 Future Improvements
 
 * ☁️ Backend integration (Firebase / REST API)
