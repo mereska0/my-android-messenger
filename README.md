@@ -18,7 +18,7 @@ This project was created as part of an intensive Android learning process with f
 * 🤖 Fake auto-replies
 * 🗑 Delete/edit messages
 * ⚙️ Message options screen
-* 🔄 Reactive UI (state updates instantly)
+* 🔄 Reactive UI
 
 ---
 
@@ -46,29 +46,12 @@ The app follows a simplified **MVVM (Model-View-ViewModel)** architecture:
 
 ---
 
-## 🔄 State Management
-
-* Single source of truth (SSOT) via `UiState`
-* State hoisting (UI does not own state)
-* Immutable updates using `copy()`
-
-Example:
-
-```kotlin
-uiState = uiState.copy(
-    contacts = updatedList
-)
-```
-
----
-
 ## 🧠 Key Concepts Practiced
 
 * Jetpack Compose basics (LazyColumn, TextField, Buttons)
 * Navigation with arguments
 * State management in Compose
 * ViewModel lifecycle
-* Coroutines (`viewModelScope`, `launch`, `delay`)
 * Clean UI separation (UI vs logic)
 * Event-driven architecture
 
