@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.messenger.data.local.MessageEntity
+import com.example.messenger.model.Chat
 import com.example.messenger.viewmodel.ChatViewModel
 import kotlinx.coroutines.flow.Flow
 

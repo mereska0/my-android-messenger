@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import com.example.messenger.model.Chat
 import com.example.messenger.ui.*
 import com.example.messenger.viewmodel.ChatViewModel
 
@@ -83,7 +84,7 @@ fun AppNavigation(viewModel: ChatViewModel) {
             )
         }
 
-        composable(ScreenManager.MessageOptionScreen.route) {
+        composable(ScreenManager.MessageOptionScreen.route){
 
             val viewModel: ChatViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 
