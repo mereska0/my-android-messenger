@@ -10,15 +10,15 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.messenger.viewmodel.Message
+import com.example.messenger.data.local.MessageEntity
 
 @Composable
 fun ChatScreen(
-    messages: List<Message>,
+    messages: List<MessageEntity>,
     chatId: Int,
-    onSend: (id: Int, text: String, isFromMe: Boolean) -> Unit,
+    onSend: (Int, String, Boolean) -> Unit,
     onBack: () -> Unit,
-    onMessageClick: (Message) -> Unit,
+    onMessageClick: (MessageEntity) -> Unit,
     formatTime: (Long) -> String
 ) {
     var inputText by remember { mutableStateOf("") }
