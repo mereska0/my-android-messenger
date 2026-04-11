@@ -62,7 +62,3 @@ ___
 
 *This is a study project, not production-ready software.
 Some features are simplified or simulated (e.g. fake replies, local storage).*
-
-⭐ If you like this project
-
-Feel free to star ⭐ the repository or fork it for learning purposes.
