@@ -1,8 +1,16 @@
 # 📱 Messenger App (Jetpack Compose)
 
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
+![MVVM](https://img.shields.io/badge/Architecture-MVVM-blue?style=for-the-badge)
+
+---
+
+## 🚀 Project Overview
+
 A simple messenger application built with Kotlin and Jetpack Compose.
 This project was created as part of an intensive Android learning process with focus on modern Android architecture, state management, and UI development.
-
 ### 🚀 Features
 - 📋 Contacts list
 - 🔍 Search contacts
